@@ -1,4 +1,4 @@
-module in.drifted.tools.image.browser {
+module in.drifted.tools.jetbrowser {
 
     requires javafx.controls;
 
