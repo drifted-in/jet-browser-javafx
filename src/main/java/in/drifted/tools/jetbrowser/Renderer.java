@@ -67,7 +67,6 @@ public class Renderer {
         group.getChildren().add(IMAGE_VIEW);
 
         SCALE_PROPERTY.bind(PAN_AND_ZOOM.getScaleProperty());
-        DELTA_Y_PROPERTY.bind(PAN_AND_ZOOM.getDeltaYProperty());
         PAN_AND_ZOOM.getChildren().add(group);
 
         SCROLL_PANE.setPannable(true);

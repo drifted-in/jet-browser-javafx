@@ -71,16 +71,13 @@ public class SceneGestures {
         @Override
         public void handle(ScrollEvent event) {
 
-            double delta = PanAndZoomPane.DEFAULT_DELTA;
             double scale = panAndZoomPane.getScaleProperty().get();
             double oldScale = scale;
 
-            panAndZoomPane.getDeltaYProperty().set(event.getDeltaY());
-
-            if (panAndZoomPane.getDeltaYProperty().get() < 0) {
-                scale /= delta;
+            if (event.getDeltaY() < 0) {
+                scale /= PanAndZoomPane.DEFAULT_DELTA;
             } else {
-                scale *= delta;
+                scale *= PanAndZoomPane.DEFAULT_DELTA;
             }
 
             Bounds bounds = panAndZoomPane.getBoundsInParent();

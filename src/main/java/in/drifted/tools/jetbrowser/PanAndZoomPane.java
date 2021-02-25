@@ -25,11 +25,9 @@ public class PanAndZoomPane extends Pane {
     public static final double DEFAULT_DELTA = 2.0d;
 
     private final DoubleProperty scaleProperty;
-    private final DoubleProperty deltaYProperty;
 
     public PanAndZoomPane(double scale, double deltaY) {
         scaleProperty = new SimpleDoubleProperty(scale);
-        deltaYProperty = new SimpleDoubleProperty(deltaY);
         scaleXProperty().bind(scaleProperty);
         scaleYProperty().bind(scaleProperty);
     }
@@ -66,10 +64,6 @@ public class PanAndZoomPane extends Pane {
 
     public DoubleProperty getScaleProperty() {
         return scaleProperty;
-    }
-
-    public DoubleProperty getDeltaYProperty() {
-        return deltaYProperty;
     }
 
 }
