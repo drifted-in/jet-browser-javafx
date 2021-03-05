@@ -47,8 +47,7 @@ public class Renderer {
     private static final AnchorPane ROOT = new AnchorPane();
     private static final ScrollPane SCROLL_PANE = new ScrollPane();
     private static final DoubleProperty SCALE_PROPERTY = new SimpleDoubleProperty(1.0d);
-    private static final DoubleProperty DELTA_Y_PROPERTY = new SimpleDoubleProperty(0.0d);
-    private static final PanAndZoomPane PAN_AND_ZOOM = new PanAndZoomPane(SCALE_PROPERTY.get(), DELTA_Y_PROPERTY.get());
+    private static final PanAndZoomPane PAN_AND_ZOOM = new PanAndZoomPane(SCALE_PROPERTY.get());
     private static final ImageView IMAGE_VIEW = new ImageView();
     private static final List<String> PATH_LIST = new ArrayList<>();
 
