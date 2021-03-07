@@ -34,15 +34,13 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Renderer {
 
     private static final AnchorPane ROOT = new AnchorPane();
-    private static final PanAndZoomPane PAN_AND_ZOOM = new PanAndZoomPane();
+    private static final PanAndZoomPane PAN_AND_ZOOM = new PanAndZoomPane(ROOT);
     private static final ImageView IMAGE_VIEW = new ImageView();
     private static final List<String> PATH_LIST = new ArrayList<>();
 
@@ -60,16 +58,8 @@ public class Renderer {
         Group group = new Group();
         group.getChildren().add(IMAGE_VIEW);
         PAN_AND_ZOOM.getChildren().add(group);
-        PAN_AND_ZOOM.toBack();
-
-        SceneGestures sceneGestures = new SceneGestures(PAN_AND_ZOOM);
-
-        ROOT.addEventFilter(KeyEvent.KEY_PRESSED, getOnKeyPressedEventHandler());
-        ROOT.addEventFilter(MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-        ROOT.addEventFilter(MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-        ROOT.addEventFilter(ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
-
         ROOT.getChildren().add(PAN_AND_ZOOM);
+        ROOT.addEventFilter(KeyEvent.KEY_PRESSED, getOnKeyPressedEventHandler());
 
         try (ZipFile zipFile = new ZipFile(zipFilePath.toFile())) {
             zipFile.stream()
