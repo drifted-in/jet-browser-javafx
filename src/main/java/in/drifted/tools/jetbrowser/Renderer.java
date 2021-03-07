@@ -26,11 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
@@ -45,9 +42,7 @@ import javafx.stage.Stage;
 public class Renderer {
 
     private static final AnchorPane ROOT = new AnchorPane();
-    private static final ScrollPane SCROLL_PANE = new ScrollPane();
-    private static final DoubleProperty SCALE_PROPERTY = new SimpleDoubleProperty(1.0d);
-    private static final PanAndZoomPane PAN_AND_ZOOM = new PanAndZoomPane(SCALE_PROPERTY.get());
+    private static final PanAndZoomPane PAN_AND_ZOOM = new PanAndZoomPane();
     private static final ImageView IMAGE_VIEW = new ImageView();
     private static final List<String> PATH_LIST = new ArrayList<>();
 
@@ -64,24 +59,17 @@ public class Renderer {
 
         Group group = new Group();
         group.getChildren().add(IMAGE_VIEW);
-
-        SCALE_PROPERTY.bind(PAN_AND_ZOOM.getScaleProperty());
         PAN_AND_ZOOM.getChildren().add(group);
-
-        SCROLL_PANE.setPannable(true);
-        SCROLL_PANE.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        SCROLL_PANE.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
-        SCROLL_PANE.setContent(PAN_AND_ZOOM);
         PAN_AND_ZOOM.toBack();
 
         SceneGestures sceneGestures = new SceneGestures(PAN_AND_ZOOM);
-        SCROLL_PANE.addEventFilter(KeyEvent.KEY_PRESSED, getOnKeyPressedEventHandler());
-        SCROLL_PANE.addEventFilter(MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-        SCROLL_PANE.addEventFilter(MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-        SCROLL_PANE.addEventFilter(ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
 
-        ROOT.getChildren().add(SCROLL_PANE);
+        ROOT.addEventFilter(KeyEvent.KEY_PRESSED, getOnKeyPressedEventHandler());
+        ROOT.addEventFilter(MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+        ROOT.addEventFilter(MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+        ROOT.addEventFilter(ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+
+        ROOT.getChildren().add(PAN_AND_ZOOM);
 
         try (ZipFile zipFile = new ZipFile(zipFilePath.toFile())) {
             zipFile.stream()
@@ -122,7 +110,7 @@ public class Renderer {
     }
 
     public void setFocus() {
-        SCROLL_PANE.requestFocus();
+        ROOT.requestFocus();
     }
 
     public EventHandler<KeyEvent> getOnKeyPressedEventHandler() {

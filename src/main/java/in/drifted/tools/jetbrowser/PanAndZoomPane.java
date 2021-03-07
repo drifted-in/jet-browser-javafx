@@ -26,8 +26,8 @@ public class PanAndZoomPane extends Pane {
 
     private final DoubleProperty scaleProperty;
 
-    public PanAndZoomPane(double scale) {
-        scaleProperty = new SimpleDoubleProperty(scale);
+    public PanAndZoomPane() {
+        scaleProperty = new SimpleDoubleProperty(1.0);
         scaleXProperty().bind(scaleProperty);
         scaleYProperty().bind(scaleProperty);
     }
