@@ -53,7 +53,7 @@ public class App extends Application {
             primaryStage.show();
            
             renderer.fitHeight();
-            renderer.setFocus();
+            renderer.getRoot().requestFocus();
             
         } catch (IOException e) {
             System.err.println(e.getMessage());

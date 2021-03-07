@@ -109,10 +109,6 @@ public class Renderer {
         return ROOT;
     }
 
-    public void setFocus() {
-        ROOT.requestFocus();
-    }
-
     public EventHandler<KeyEvent> getOnKeyPressedEventHandler() {
         return onKeyPressedEventHandler;
     }
