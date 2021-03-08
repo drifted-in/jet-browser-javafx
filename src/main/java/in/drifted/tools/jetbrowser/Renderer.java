@@ -71,6 +71,10 @@ public class Renderer {
         updateImage();
     }
 
+    public AnchorPane getRoot() {
+        return ROOT;
+    }
+
     public void fitHeight() {
         PAN_AND_ZOOM.fitHeight();
     }
@@ -88,10 +92,6 @@ public class Renderer {
                 IMAGE_VIEW.setImage(image);
             }
         }
-    }
-
-    public AnchorPane getRoot() {
-        return ROOT;
     }
 
     private EventHandler<KeyEvent> onKeyPressedEventHandler = event -> {
