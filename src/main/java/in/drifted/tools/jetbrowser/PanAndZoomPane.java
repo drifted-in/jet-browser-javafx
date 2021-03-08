@@ -59,19 +59,19 @@ public class PanAndZoomPane extends Pane {
         double dx = getTranslateX() - getBoundsInParent().getMinX() - getBoundsInParent().getWidth() / 2;
         double dy = getTranslateY() - getBoundsInParent().getMinY() - getBoundsInParent().getHeight() / 2;
 
-        double newX = f * dx + getBoundsInParent().getMinX();
-        double newY = f * dy + getBoundsInParent().getMinY();
+        double centerX = f * dx + getBoundsInParent().getMinX();
+        double centerY = f * dy + getBoundsInParent().getMinY();
 
-        setPivot(newX, newY, scale);
+        setPivot(scale, centerX, centerY);
     }
 
     public void resetZoom() {
         setPivot(getTranslateX(), getTranslateY(), 1.0d);
     }
 
-    public void setPivot(double x, double y, double scale) {
-        translateXProperty().setValue(getTranslateX() - x);
-        translateYProperty().setValue(getTranslateY() - y);
+    public void setPivot(double scale, double centerX, double centerY) {
+        translateXProperty().setValue(getTranslateX() - centerX);
+        translateYProperty().setValue(getTranslateY() - centerY);
         scaleProperty.setValue(scale);
     }
 
@@ -83,7 +83,6 @@ public class PanAndZoomPane extends Pane {
 
         @Override
         public void handle(MouseEvent event) {
-
             mousePosition = new Point2D(event.getX(), event.getY());
             panePosition = new Point2D(getTranslateX(), getTranslateY());
         }
@@ -118,10 +117,10 @@ public class PanAndZoomPane extends Pane {
             Bounds bounds = getBoundsInParent();
 
             double f = (scale / oldScale) - 1;
-            double dx = (event.getX() - (bounds.getWidth() / 2 + bounds.getMinX()));
-            double dy = (event.getY() - (bounds.getHeight() / 2 + bounds.getMinY()));
+            double dx = event.getX() - (bounds.getWidth() / 2 + bounds.getMinX());
+            double dy = event.getY() - (bounds.getHeight() / 2 + bounds.getMinY());
 
-            setPivot(f * dx, f * dy, scale);
+            setPivot(scale,f * dx, f * dy);
 
             event.consume();
         }
