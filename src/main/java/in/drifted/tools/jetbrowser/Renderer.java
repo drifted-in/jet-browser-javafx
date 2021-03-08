@@ -59,7 +59,7 @@ public class Renderer {
         group.getChildren().add(IMAGE_VIEW);
         PAN_AND_ZOOM.getChildren().add(group);
         ROOT.getChildren().add(PAN_AND_ZOOM);
-        ROOT.addEventFilter(KeyEvent.KEY_PRESSED, getOnKeyPressedEventHandler());
+        ROOT.addEventFilter(KeyEvent.KEY_PRESSED, onKeyPressedEventHandler);
 
         try (ZipFile zipFile = new ZipFile(zipFilePath.toFile())) {
             zipFile.stream()
@@ -97,10 +97,6 @@ public class Renderer {
 
     public AnchorPane getRoot() {
         return ROOT;
-    }
-
-    public EventHandler<KeyEvent> getOnKeyPressedEventHandler() {
-        return onKeyPressedEventHandler;
     }
 
     private EventHandler<KeyEvent> onKeyPressedEventHandler = new EventHandler<KeyEvent>() {
