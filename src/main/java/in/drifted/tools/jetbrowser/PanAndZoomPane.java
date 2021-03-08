@@ -73,6 +73,7 @@ public class PanAndZoomPane extends Pane {
     private EventHandler<MouseEvent> onMousePressedEventHandler = event -> {
         mousePosition = new Point2D(event.getX(), event.getY());
         panePosition = new Point2D(getTranslateX(), getTranslateY());
+        event.consume();
     };
 
     private EventHandler<MouseEvent> onMouseDraggedEventHandler = event -> {
