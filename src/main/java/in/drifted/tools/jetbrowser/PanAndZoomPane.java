@@ -66,7 +66,7 @@ public class PanAndZoomPane extends Pane {
     }
 
     public void resetZoom() {
-        setPivot(getTranslateX(), getTranslateY(), 1.0d);
+        setPivot(1.0, getTranslateX(), getTranslateY());
     }
 
     public void setPivot(double scale, double centerX, double centerY) {
