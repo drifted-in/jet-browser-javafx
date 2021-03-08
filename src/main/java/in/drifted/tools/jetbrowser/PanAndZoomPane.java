@@ -29,14 +29,14 @@ public class PanAndZoomPane extends Pane {
 
     public static final double DEFAULT_DELTA = 2.0d;
 
-    private final DoubleProperty scaleProperty;
+    private static DoubleProperty scaleProperty;
     private final Pane rootPane;
     private Point2D mousePosition;
     private Point2D panePosition;
 
     public PanAndZoomPane(Pane rootPane) {
         this.rootPane = rootPane;
-        scaleProperty = new SimpleDoubleProperty(1.0);
+        this.scaleProperty = new SimpleDoubleProperty(1.0);
         scaleXProperty().bind(scaleProperty);
         scaleYProperty().bind(scaleProperty);
         rootPane.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressedEventHandler);
@@ -75,51 +75,37 @@ public class PanAndZoomPane extends Pane {
         scaleProperty.setValue(scale);
     }
 
-    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<>() {
-
-        @Override
-        public void handle(MouseEvent event) {
-            mousePosition = new Point2D(event.getX(), event.getY());
-            panePosition = new Point2D(getTranslateX(), getTranslateY());
-        }
+    private EventHandler<MouseEvent> onMousePressedEventHandler = event -> {
+        mousePosition = new Point2D(event.getX(), event.getY());
+        panePosition = new Point2D(getTranslateX(), getTranslateY());
     };
 
-    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<>() {
-
-        @Override
-        public void handle(MouseEvent event) {
-
-            setTranslateX(panePosition.getX() + event.getX() - mousePosition.getX());
-            setTranslateY(panePosition.getY() + event.getY() - mousePosition.getY());
-
-            event.consume();
-        }
+    private EventHandler<MouseEvent> onMouseDraggedEventHandler = event -> {
+        setTranslateX(panePosition.getX() + event.getX() - mousePosition.getX());
+        setTranslateY(panePosition.getY() + event.getY() - mousePosition.getY());
+        event.consume();
     };
 
-    private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<>() {
+    private EventHandler<ScrollEvent> onScrollEventHandler = event -> {
 
-        @Override
-        public void handle(ScrollEvent event) {
+        double scale = scaleProperty.get();
+        double oldScale = scale;
 
-            double scale = scaleProperty.get();
-            double oldScale = scale;
-
-            if (event.getDeltaY() < 0) {
-                scale /= PanAndZoomPane.DEFAULT_DELTA;
-            } else {
-                scale *= PanAndZoomPane.DEFAULT_DELTA;
-            }
-
-            Bounds bounds = getBoundsInParent();
-
-            double f = (scale / oldScale) - 1;
-            double dx = event.getX() - (bounds.getWidth() / 2 + bounds.getMinX());
-            double dy = event.getY() - (bounds.getHeight() / 2 + bounds.getMinY());
-
-            setPivot(scale,f * dx, f * dy);
-
-            event.consume();
+        if (event.getDeltaY() < 0) {
+            scale /= PanAndZoomPane.DEFAULT_DELTA;
+        } else {
+            scale *= PanAndZoomPane.DEFAULT_DELTA;
         }
+
+        Bounds bounds = getBoundsInParent();
+
+        double f = (scale / oldScale) - 1;
+        double dx = event.getX() - (bounds.getWidth() / 2 + bounds.getMinX());
+        double dy = event.getY() - (bounds.getHeight() / 2 + bounds.getMinY());
+
+        setPivot(scale, f * dx, f * dy);
+
+        event.consume();
     };
 
 }
