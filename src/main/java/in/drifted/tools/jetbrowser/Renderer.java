@@ -98,59 +98,55 @@ public class Renderer {
         return ROOT;
     }
 
-    private EventHandler<KeyEvent> onKeyPressedEventHandler = new EventHandler<KeyEvent>() {
+    private EventHandler<KeyEvent> onKeyPressedEventHandler = event -> {
 
-        @Override
-        public void handle(KeyEvent event) {
+        if (event.getCode() == KeyCode.RIGHT
+                || event.getCode() == KeyCode.LEFT
+                || event.getCode() == KeyCode.HOME
+                || event.getCode() == KeyCode.END) {
 
-            if (event.getCode() == KeyCode.RIGHT
-                    || event.getCode() == KeyCode.LEFT
-                    || event.getCode() == KeyCode.HOME
-                    || event.getCode() == KeyCode.END) {
+            int newImageIndex = currentImageIndex;
 
-                int newImageIndex = currentImageIndex;
+            if (event.getCode() == KeyCode.HOME) {
+                newImageIndex = 0;
 
-                if (event.getCode() == KeyCode.HOME) {
-                    newImageIndex = 0;
+            } else if (event.getCode() == KeyCode.END) {
+                newImageIndex = PATH_LIST.size() - 1;
 
-                } else if (event.getCode() == KeyCode.END) {
-                    newImageIndex = PATH_LIST.size() - 1;
+            } else {
+                int delta = event.isControlDown() ? 20 : event.isShiftDown() ? 5 : 1;
 
-                } else {
-                    int delta = event.isControlDown() ? 20 : event.isShiftDown() ? 5 : 1;
+                if (event.getCode() == KeyCode.LEFT) {
+                    newImageIndex = Math.max(currentImageIndex - delta, 0);
 
-                    if (event.getCode() == KeyCode.LEFT) {
-                        newImageIndex = Math.max(currentImageIndex - delta, 0);
-
-                    } else if (event.getCode() == KeyCode.RIGHT) {
-                        newImageIndex = Math.min(currentImageIndex + delta, PATH_LIST.size() - 1);
-                    }
+                } else if (event.getCode() == KeyCode.RIGHT) {
+                    newImageIndex = Math.min(currentImageIndex + delta, PATH_LIST.size() - 1);
                 }
-
-                if (newImageIndex != currentImageIndex) {
-                    currentImageIndex = newImageIndex;
-                    try {
-                        updateImage();
-
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
-
-            } else if (event.getCode() == KeyCode.W) {
-                fitWidth();
-            } else if (event.getCode() == KeyCode.H) {
-                fitHeight();
-            } else if (event.getCode() == KeyCode.R) {
-                PAN_AND_ZOOM.resetZoom();
-            } else if (event.getCode() == KeyCode.C) {
-                ClipboardContent content = new ClipboardContent();
-                content.putString(currentImageFileName);
-                Clipboard.getSystemClipboard().setContent(content);
             }
 
-            event.consume();
+            if (newImageIndex != currentImageIndex) {
+                currentImageIndex = newImageIndex;
+                try {
+                    updateImage();
+
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+        } else if (event.getCode() == KeyCode.W) {
+            PAN_AND_ZOOM.fitWidth();
+        } else if (event.getCode() == KeyCode.H) {
+            PAN_AND_ZOOM.fitHeight();
+        } else if (event.getCode() == KeyCode.R) {
+            PAN_AND_ZOOM.resetZoom();
+        } else if (event.getCode() == KeyCode.C) {
+            ClipboardContent content = new ClipboardContent();
+            content.putString(currentImageFileName);
+            Clipboard.getSystemClipboard().setContent(content);
         }
+
+        event.consume();
     };
 
     private String getFileName(String path) {
