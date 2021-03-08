@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
 
 public class PanAndZoomPane extends Pane {
 
-    public static final double DEFAULT_DELTA = 2.0d;
+    public static final double DEFAULT_DELTA = 1.2;
 
     private final Pane rootPane;
     private Point2D mousePosition;
