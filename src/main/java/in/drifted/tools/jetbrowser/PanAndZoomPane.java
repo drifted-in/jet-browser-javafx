@@ -75,10 +75,6 @@ public class PanAndZoomPane extends Pane {
         scaleProperty.setValue(scale);
     }
 
-    public DoubleProperty getScaleProperty() {
-        return scaleProperty;
-    }
-
     private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<>() {
 
         @Override
@@ -105,7 +101,7 @@ public class PanAndZoomPane extends Pane {
         @Override
         public void handle(ScrollEvent event) {
 
-            double scale = getScaleProperty().get();
+            double scale = scaleProperty.get();
             double oldScale = scale;
 
             if (event.getDeltaY() < 0) {
