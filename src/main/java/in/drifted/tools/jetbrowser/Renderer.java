@@ -69,7 +69,6 @@ public class Renderer {
         }
 
         updateImage();
-        IMAGE_VIEW.fitHeightProperty();
     }
 
     public void fitHeight() {
