@@ -59,6 +59,7 @@ public class Renderer {
         group.getChildren().add(IMAGE_VIEW);
         PAN_AND_ZOOM.getChildren().add(group);
         ROOT.getChildren().add(PAN_AND_ZOOM);
+        ROOT.setStyle("-fx-background-color: #000000");
         ROOT.addEventFilter(KeyEvent.KEY_PRESSED, onKeyPressedEventHandler);
 
         try (ZipFile zipFile = new ZipFile(zipFilePath.toFile())) {
