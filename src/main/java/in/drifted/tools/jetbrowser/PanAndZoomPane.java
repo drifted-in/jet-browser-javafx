@@ -24,17 +24,18 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.transform.Transform;
 
 public class PanAndZoomPane extends Pane {
 
     public static final double DEFAULT_DELTA = 2.0d;
 
     private final DoubleProperty scaleProperty;
+    private final Pane rootPane;
     private Point2D mousePosition;
     private Point2D panePosition;
 
     public PanAndZoomPane(Pane rootPane) {
+        this.rootPane = rootPane;
         scaleProperty = new SimpleDoubleProperty(1.0);
         scaleXProperty().bind(scaleProperty);
         scaleYProperty().bind(scaleProperty);
@@ -43,12 +44,13 @@ public class PanAndZoomPane extends Pane {
         rootPane.addEventFilter(ScrollEvent.ANY, onScrollEventHandler);
     }
 
-    public void fitHeight(double height) {
-        fit(height / getLayoutBounds().getMaxY());
+    public void fitHeight() {
+        fit(rootPane.getHeight() / getLayoutBounds().getMaxY());
+        translateXProperty().setValue(getTranslateX() + (rootPane.getWidth() - getBoundsInParent().getWidth()) / 2);
     }
-        
-    public void fitWidth(double width) {
-        fit(width / getLayoutBounds().getMaxX());
+
+    public void fitWidth() {
+        fit(rootPane.getWidth() / getLayoutBounds().getMaxX());
     }
 
     private void fit(double scale) {

@@ -73,11 +73,11 @@ public class Renderer {
     }
 
     public void fitHeight() {
-        PAN_AND_ZOOM.fitHeight(primaryStage.getScene().getHeight());
+        PAN_AND_ZOOM.fitHeight();
     }
 
     public void fitWidth() {
-        PAN_AND_ZOOM.fitWidth(primaryStage.getScene().getWidth());
+        PAN_AND_ZOOM.fitWidth();
     }
 
     private void updateImage() throws IOException {
