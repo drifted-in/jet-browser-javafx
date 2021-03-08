@@ -16,8 +16,6 @@
 
 package in.drifted.tools.jetbrowser;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -29,16 +27,12 @@ public class PanAndZoomPane extends Pane {
 
     public static final double DEFAULT_DELTA = 2.0d;
 
-    private static DoubleProperty scaleProperty;
     private final Pane rootPane;
     private Point2D mousePosition;
     private Point2D panePosition;
 
     public PanAndZoomPane(Pane rootPane) {
         this.rootPane = rootPane;
-        this.scaleProperty = new SimpleDoubleProperty(1.0);
-        scaleXProperty().bind(scaleProperty);
-        scaleYProperty().bind(scaleProperty);
         rootPane.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressedEventHandler);
         rootPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDraggedEventHandler);
         rootPane.addEventFilter(ScrollEvent.ANY, onScrollEventHandler);
@@ -55,7 +49,7 @@ public class PanAndZoomPane extends Pane {
 
     private void fit(double scale) {
 
-        double f = scale - scaleProperty.get();
+        double f = scale - scaleXProperty().get();
         double dx = getTranslateX() - getBoundsInParent().getMinX() - getBoundsInParent().getWidth() / 2;
         double dy = getTranslateY() - getBoundsInParent().getMinY() - getBoundsInParent().getHeight() / 2;
 
@@ -72,7 +66,8 @@ public class PanAndZoomPane extends Pane {
     public void setPivot(double scale, double centerX, double centerY) {
         translateXProperty().setValue(getTranslateX() - centerX);
         translateYProperty().setValue(getTranslateY() - centerY);
-        scaleProperty.setValue(scale);
+        scaleXProperty().setValue(scale);
+        scaleYProperty().setValue(scale);
     }
 
     private EventHandler<MouseEvent> onMousePressedEventHandler = event -> {
@@ -88,7 +83,7 @@ public class PanAndZoomPane extends Pane {
 
     private EventHandler<ScrollEvent> onScrollEventHandler = event -> {
 
-        double scale = scaleProperty.get();
+        double scale = scaleXProperty().get();
         double oldScale = scale;
 
         if (event.getDeltaY() < 0) {
