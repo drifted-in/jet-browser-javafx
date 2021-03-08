@@ -75,10 +75,6 @@ public class Renderer {
         PAN_AND_ZOOM.fitHeight();
     }
 
-    public void fitWidth() {
-        PAN_AND_ZOOM.fitWidth();
-    }
-
     private void updateImage() throws IOException {
 
         String path = PATH_LIST.get(currentImageIndex);
