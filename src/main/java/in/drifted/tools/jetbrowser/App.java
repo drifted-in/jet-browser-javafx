@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -46,6 +47,7 @@ public class App extends Application {
             primaryStage.setWidth(bounds.getWidth());
             primaryStage.setHeight(bounds.getHeight());
             primaryStage.setMaximized(true);
+            primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("/icon.png")));
 
             Renderer renderer = new Renderer(primaryStage, path);
             Scene scene = new Scene(renderer.getRoot());
