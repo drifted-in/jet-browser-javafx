@@ -12,7 +12,7 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 ### Building native image
 1. Open `x64 Native Tools Command Prompt for VS 2019` console app
 2. Change the current directory to the project folder (e.g. `cd C:\jet-browser-javafx`)
-3. Execute the maven goal `mvn client:build`
+3. Execute the maven goal `mvn gluonfx:build`
 4. Verify the output stored in `target\client\x86_64-windows\jet-browser.exe`
 
 ## Running
