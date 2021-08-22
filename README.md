@@ -6,8 +6,8 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 
 ### Prerequisites
 1. Install Visual Studio 2019 with [mandatory](https://docs.gluonhq.com/#platforms_windows) components
-2. Install GraalVM 21 for Java 11
-3. Set `GRAALVM_HOME` to GraalVM installation folder, e.g. `C:\graalvm-ce-java11-21.0.0` 
+2. Download and unpack [the latest](https://github.com/gluonhq/graal/releases/latest) version of the Gluon built version of GraalVM 21
+3. Set `GRAALVM_HOME` to GraalVM installation folder, e.g. `C:\graalvm-svm-windows-gluon-21.2.0-dev` 
 
 ### Building native image
 1. Open `x64 Native Tools Command Prompt for VS 2019` console app
