@@ -97,10 +97,11 @@ public class Renderer {
 
     private EventHandler<KeyEvent> onKeyPressedEventHandler = event -> {
 
-        if (event.getCode() == KeyCode.RIGHT
-                || event.getCode() == KeyCode.LEFT
-                || event.getCode() == KeyCode.HOME
-                || event.getCode() == KeyCode.END) {
+        switch (event.getCode()) {
+            case RIGHT:
+            case LEFT:
+            case HOME:
+            case END: {
 
             int newImageIndex = currentImageIndex;
 
@@ -131,16 +132,23 @@ public class Renderer {
                 }
             }
 
-        } else if (event.getCode() == KeyCode.W) {
+                break;
+            }
+
+            case W:
             PAN_AND_ZOOM.fitWidth();
-        } else if (event.getCode() == KeyCode.H) {
+                break;
+            case H:
             PAN_AND_ZOOM.fitHeight();
-        } else if (event.getCode() == KeyCode.R) {
+                break;
+            case R:
             PAN_AND_ZOOM.resetZoom();
-        } else if (event.getCode() == KeyCode.C) {
+                break;
+            case C:
             ClipboardContent content = new ClipboardContent();
             content.putString(currentImageFileName);
             Clipboard.getSystemClipboard().setContent(content);
+                break;
         }
 
         event.consume();
