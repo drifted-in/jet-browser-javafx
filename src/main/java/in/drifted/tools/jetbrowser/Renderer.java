@@ -84,7 +84,7 @@ public class Renderer {
 
         String path = PATH_LIST.get(currentImageIndex);
 
-        try (FileSystem fileSystem = FileSystems.newFileSystem(zipFilePath, null)) {
+        try (FileSystem fileSystem = FileSystems.newFileSystem(zipFilePath, ClassLoader.getSystemClassLoader())) {
             Path imagePath = fileSystem.getPath(path);
             try (InputStream inputStream = Files.newInputStream(imagePath)) {
                 Image image = new Image(inputStream);
@@ -103,51 +103,51 @@ public class Renderer {
             case HOME:
             case END: {
 
-            int newImageIndex = currentImageIndex;
+                int newImageIndex = currentImageIndex;
 
-            if (event.getCode() == KeyCode.HOME) {
-                newImageIndex = 0;
+                if (event.getCode() == KeyCode.HOME) {
+                    newImageIndex = 0;
 
-            } else if (event.getCode() == KeyCode.END) {
-                newImageIndex = PATH_LIST.size() - 1;
+                } else if (event.getCode() == KeyCode.END) {
+                    newImageIndex = PATH_LIST.size() - 1;
 
-            } else {
-                int delta = event.isControlDown() ? 20 : event.isShiftDown() ? 5 : 1;
+                } else {
+                    int delta = event.isControlDown() ? 20 : event.isShiftDown() ? 5 : 1;
 
-                if (event.getCode() == KeyCode.LEFT) {
-                    newImageIndex = Math.max(currentImageIndex - delta, 0);
+                    if (event.getCode() == KeyCode.LEFT) {
+                        newImageIndex = Math.max(currentImageIndex - delta, 0);
 
-                } else if (event.getCode() == KeyCode.RIGHT) {
-                    newImageIndex = Math.min(currentImageIndex + delta, PATH_LIST.size() - 1);
+                    } else if (event.getCode() == KeyCode.RIGHT) {
+                        newImageIndex = Math.min(currentImageIndex + delta, PATH_LIST.size() - 1);
+                    }
                 }
-            }
 
-            if (newImageIndex != currentImageIndex) {
-                currentImageIndex = newImageIndex;
-                try {
-                    updateImage();
+                if (newImageIndex != currentImageIndex) {
+                    currentImageIndex = newImageIndex;
+                    try {
+                        updateImage();
 
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
-            }
 
                 break;
             }
 
             case W:
-            PAN_AND_ZOOM.fitWidth();
+                PAN_AND_ZOOM.fitWidth();
                 break;
             case H:
-            PAN_AND_ZOOM.fitHeight();
+                PAN_AND_ZOOM.fitHeight();
                 break;
             case R:
-            PAN_AND_ZOOM.resetZoom();
+                PAN_AND_ZOOM.resetZoom();
                 break;
             case C:
-            ClipboardContent content = new ClipboardContent();
-            content.putString(currentImageFileName);
-            Clipboard.getSystemClipboard().setContent(content);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(currentImageFileName);
+                Clipboard.getSystemClipboard().setContent(content);
                 break;
         }
 
