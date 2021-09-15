@@ -6,7 +6,8 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 
 ### Prerequisites
 1. Install Visual Studio 2019 with [mandatory](https://docs.gluonhq.com/#platforms_windows) components
-2. Download and unpack [the latest](https://github.com/gluonhq/graal/releases/latest) version of the Gluon built version of GraalVM 21
+2. Download and unpack [the latest](https://github.com/gluonhq/graal/releases/latest) version of the Gluon built 
+   version of GraalVM 21
 3. Set `GRAALVM_HOME` to GraalVM installation folder, e.g. `C:\graalvm-svm-windows-gluon-21.2.0-dev` 
 
 ### Building native image
@@ -15,13 +16,25 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 3. Execute the maven goal `mvn gluonfx:build`
 4. Verify the output stored in `target\client\x86_64-windows\jet-browser.exe`
 
-## Running
+### Changing icon and exe file metadata
+1. Open `jet-browser.exe` in the Resource Hacker
+2. Press `Ctrl+M` to Add binary resource, navigate to the `\icon.ico` and then click Add Resource
+3. Expand the Version Info node
+4. In the script on the right update FileDescription and ProductName values together with all version instances
+5. Press `F5` to compile the script
+6. Press `Ctrl+S` to save your changes
+
+## Creating a Windows installer
+1. Copy and rename `target\client\x86_64-windows\jet-browser.exe` to `installer\JetBrowser.exe`
+2. Open NSIS app, in the Compiler section choose Compile NSI script and then load `installer\installer.nsi` script
+
+## Running (without installing)
 The example of scanned parish book: [150-02792.zip](http://88.146.158.154:8083/150-02792.zip) (110 MB)
 
 ### From console
 - Type `jet-browser.exe 150-02792.zip`
 
-### From File Explorer
+### From File Explorer (Windows)
 - Add a new `Open with JetBrowser` context menu item for any ZIP file by altering Windows registry:
   1. Open `regedit.exe`
   2. In the `HKEY_CLASSES_ROOT\CompressedFolder\Shell` path create a new `JetBrowser` key 
