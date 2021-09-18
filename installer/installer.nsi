@@ -6,8 +6,8 @@
 ;--------------------------------
 ;Use same custom icon for both installer and uninstaller
 
-  !define MUI_ICON "icon.ico"
-  !define MUI_UNICON "icon.ico"
+  !define MUI_ICON "..\icon.ico"
+  !define MUI_UNICON "..\icon.ico"
 
 ;--------------------------------
 ;General
