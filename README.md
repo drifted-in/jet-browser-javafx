@@ -28,11 +28,16 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 1. Copy and rename `target\client\x86_64-windows\jet-browser.exe` to `installer\JetBrowser.exe`
 2. Open NSIS app, in the Compiler section choose Compile NSI script and then load `installer\installer.nsi` script
 
-## Running (without installing)
-The example of scanned parish book: [150-02792.zip](http://88.146.158.154:8083/150-02792.zip) (110 MB)
+## Running (on Windows)
+1. Download an [installer](https://drifted.in/other/jetbrowser/installer.exe) (19 MB)
+2. Install the image browser
+3. Download a sample scanned parish book: [150-02792.zip](http://88.146.158.154:8083/150-02792.zip) (110 MB)
+4. Locate downloaded file in the File Explorer, right click the zip file and choose the `Open with JetBrowser` menu item
+
+## Running (on Windows, without installer)
 
 ### From console
-- Type `jet-browser.exe 150-02792.zip`
+- Type `JetBrowser.exe 150-02792.zip`
 
 ### From File Explorer (Windows)
 - Add a new `Open with JetBrowser` context menu item for any ZIP file by altering Windows registry:
@@ -41,7 +46,7 @@ The example of scanned parish book: [150-02792.zip](http://88.146.158.154:8083/1
   3. Select the `(Default)` key and set `Open with JetBrowser` as a value
   4. Optionally add a new `Icon` key and specify the path as a value
   5. Add a new `command` subkey and specify the JetBrowser executable path followed by `"%1"` as a value, 
-     for example `C:\jet-browser-javafx\target\client\x86_64-windows\jet-browser.exe "%1"`
+     for example `C:\jet-browser-javafx\JetBrowser.exe "%1"`
 - in the File Explorer right click the zip file and choose the `Open with JetBrowser` menu item
 
 ## Usage
