@@ -11,10 +11,14 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 3. Set `GRAALVM_HOME` to GraalVM installation folder, e.g. `C:\graalvm-svm-windows-gluon-21.2.0-dev` 
 
 ### Building native image
-1. Open `x64 Native Tools Command Prompt for VS 2019` console app
-2. Change the current directory to the project folder (e.g. `cd C:\jet-browser-javafx`)
-3. Execute the maven goal `mvn gluonfx:build`
-4. Verify the output stored in `target\client\x86_64-windows\jet-browser.exe`
+1. Disable all Java references (by adding a path prefix) from the global `PATH` variable
+2. Open `x64 Native Tools Command Prompt for VS 2019` console app
+3. Clear the `PATH` variable and optionally set the path to Maven bin folder `SET PATH=C:\maven\bin`
+4. Set the MS specific vars `C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat`
+5. Set the proper `JAVA_HOME` variable `SET JAVA_HOME=%GRAALVM_HOME%`
+6. Change the current directory to the project folder (e.g. `cd C:\jet-browser-javafx`)
+7. Execute the maven goal `mvn gluonfx:build`
+8. Verify the output stored in `target\client\x86_64-windows\jet-browser.exe`
 
 ### Changing icon and exe file metadata
 1. Open `jet-browser.exe` in the Resource Hacker
