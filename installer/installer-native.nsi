@@ -49,16 +49,12 @@
 Section "Installer"
 
   SetOutPath "$INSTDIR"
-  File "..\jet-browser\jet-browser.exe"
-  SetOutPath "$INSTDIR\app"
-  File /r "..\jet-browser\app\"
-  SetOutPath "$INSTDIR\runtime"
-  File /r "..\jet-browser\runtime\"
+  File "JetBrowser.exe"
  
   ;Create Open with context menu entry
   WriteRegStr HKCR "CompressedFolder\Shell\JetBrowser" "" "Open with JetBrowser"
-  WriteRegStr HKCR "CompressedFolder\Shell\JetBrowser" "Icon" "$INSTDIR\jet-browser.exe"
-  WriteRegStr HKCR "CompressedFolder\Shell\JetBrowser\command" "" "$INSTDIR\jet-browser.exe $\"%1$\""
+  WriteRegStr HKCR "CompressedFolder\Shell\JetBrowser" "Icon" "$INSTDIR\JetBrowser.exe"
+  WriteRegStr HKCR "CompressedFolder\Shell\JetBrowser\command" "" "$INSTDIR\JetBrowser.exe $\"%1$\""
 
   ;Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JetBrowser" "DisplayName" "JetBrowser"
@@ -90,11 +86,9 @@ Section "Uninstall"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JetBrowser"
 
   ; Remove files and uninstaller
-  Delete "$INSTDIR\jet-browser.exe"
+  Delete "$INSTDIR\JetBrowser.exe"
   Delete "$INSTDIR\uninstall.exe"
 
-  RMDir /r "$INSTDIR\app"
-  RMDir /r "$INSTDIR\runtime"
   RMDir "$INSTDIR" # Using RMDir /r $INSTDIR in the uninstaller is not safe.
 
 SectionEnd

@@ -1,7 +1,29 @@
 # JetBrowser (JavaFX)
 A desktop app for browsing parish book scans distributed in ZIP files.
 
-## Building (Windows)
+## Running (on Windows)
+1. Download an [installer](https://drifted.in/other/jetbrowser/installer.exe) (26 MB)
+2. Install the image browser
+3. Download a sample scanned parish book: [150-02792.zip](http://88.146.158.154:8083/150-02792.zip) (110 MB)
+4. Locate downloaded file in the File Explorer, right-click the zip file and choose the `Open with JetBrowser` menu item
+
+## Usage
+- Use `<-`/`->` arrows keys to move to the previous/next image
+- Use `Shift`/`Ctrl` modifiers together with arrow keys to increase the step to 5/20
+- Use `Home`/`End` keys to move to the first/last image
+- Use `H`/`W` keys to scale the image to fit the height/width of the window
+- Use `R` key to reset the size to the original image size
+- Use `C` key to copy the current image filename to the clipboard
+
+## Building as the Windows app
+This app doesn't require JDK on target machine because custom JDK is already bundled.
+1. Create a custom JDK runtime: `mvn clean javajx:jlink`
+2. Create a bundle (JDK16+): `jpackage --name jet-browser --icon icon.ico --module in.drifted.tools.jetbrowser/in.drifted.tools.jetbrowser.App --runtime-image target/jet-browser --type app-image`
+3. Create an installer using NSIS: In the Compiler section choose Compile NSI script and then load `installer\installer.nsi` script
+
+## Building as the Windows native app (experimental)
+This app doesn't require JDK on target machine as all Java code is compiled into native code.
+It requires more complex setup. Additionally, the final app can't be run on all machines because of failures when loading some system libraries.
 For other platforms please check https://docs.gluonhq.com/#_platforms
 
 ### Prerequisites
@@ -28,35 +50,6 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 5. Press `F5` to compile the script
 6. Press `Ctrl+S` to save your changes
 
-## Creating a Windows installer
+### Creating an installer
 1. Copy and rename `target\client\x86_64-windows\jet-browser.exe` to `installer\JetBrowser.exe`
-2. Open NSIS app, in the Compiler section choose Compile NSI script and then load `installer\installer.nsi` script
-
-## Running (on Windows)
-1. Download an [installer](https://drifted.in/other/jetbrowser/installer.exe) (19 MB)
-2. Install the image browser
-3. Download a sample scanned parish book: [150-02792.zip](http://88.146.158.154:8083/150-02792.zip) (110 MB)
-4. Locate downloaded file in the File Explorer, right click the zip file and choose the `Open with JetBrowser` menu item
-
-## Running (on Windows, without installer)
-
-### From console
-- Type `JetBrowser.exe 150-02792.zip`
-
-### From File Explorer (Windows)
-- Add a new `Open with JetBrowser` context menu item for any ZIP file by altering Windows registry:
-  1. Open `regedit.exe`
-  2. In the `HKEY_CLASSES_ROOT\CompressedFolder\Shell` path create a new `JetBrowser` key 
-  3. Select the `(Default)` key and set `Open with JetBrowser` as a value
-  4. Optionally add a new `Icon` key and specify the path as a value
-  5. Add a new `command` subkey and specify the JetBrowser executable path followed by `"%1"` as a value, 
-     for example `C:\jet-browser-javafx\JetBrowser.exe "%1"`
-- in the File Explorer right click the zip file and choose the `Open with JetBrowser` menu item
-
-## Usage
-- Use `<-`/`->` arrows keys to move to the previous/next image
-- Use `Shift`/`Ctrl` modifiers together with arrow keys to increase the step to 5/20  
-- Use `Home`/`End` keys to move to the first/last image
-- Use `H`/`W` keys to scale the image to fit the height/width of the window
-- Use `R` key to reset the size to the original image size
-- Use `C` key to copy the current image filename to the clipboard
+2. Open NSIS app, in the Compiler section choose Compile NSI script and then load `installer\installer-native.nsi` script

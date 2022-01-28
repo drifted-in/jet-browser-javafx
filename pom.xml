@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
         <mainClassName>in.drifted.tools.jetbrowser.App</mainClassName>
     </properties>
 
@@ -41,7 +41,11 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.7</version>
                 <configuration>
+                    <jlinkImageName>jet-browser</jlinkImageName>
+                    <jlinkVerbose>true</jlinkVerbose>
                     <mainClass>${mainClassName}</mainClass>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <stripDebug>true</stripDebug>
                 </configuration>
             </plugin>
             <plugin>
