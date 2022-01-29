@@ -141,6 +141,18 @@ public class Renderer {
             case H:
                 PAN_AND_ZOOM.fitHeight();
                 break;
+            case PLUS:
+            case ADD:
+                if (event.isControlDown()) {
+                    PAN_AND_ZOOM.zoomPlus();
+                }
+                break;
+            case MINUS:
+            case SUBTRACT:
+                if (event.isControlDown()) {
+                    PAN_AND_ZOOM.zoomMinus();
+                }
+                break;
             case R:
                 PAN_AND_ZOOM.resetZoom();
                 break;

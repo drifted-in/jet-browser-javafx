@@ -11,7 +11,8 @@ A desktop app for browsing parish book scans distributed in ZIP files.
 - Use `<-`/`->` arrows keys to move to the previous/next image
 - Use `Shift`/`Ctrl` modifiers together with arrow keys to increase the step to 5/20
 - Use `Home`/`End` keys to move to the first/last image
-- Use `H`/`W` keys to scale the image to fit the height/width of the window
+- Use `H`/`W` keys to scale the image to fit the height / width of the window
+- Use `Ctrl +` / `Ctrl -` to increase / decrease the image size
 - Use `R` key to reset the size to the original image size
 - Use `C` key to copy the current image filename to the clipboard
 

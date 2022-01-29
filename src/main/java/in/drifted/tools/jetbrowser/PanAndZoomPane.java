@@ -59,6 +59,34 @@ public class PanAndZoomPane extends Pane {
         setPivot(scale, centerX, centerY);
     }
 
+    public void zoomPlus() {
+        zoom(true, rootPane.getWidth() / 2, rootPane.getHeight() / 2);
+    }
+
+    public void zoomMinus() {
+        zoom(false, rootPane.getWidth() / 2, rootPane.getHeight() / 2);
+    }
+
+    private void zoom(boolean plus, double centerX, double centerY) {
+
+        double scale = scaleXProperty().get();
+        double oldScale = scale;
+
+        if (plus) {
+            scale *= PanAndZoomPane.DEFAULT_DELTA;
+        } else {
+            scale /= PanAndZoomPane.DEFAULT_DELTA;
+        }
+
+        Bounds bounds = getBoundsInParent();
+
+        double f = (scale / oldScale) - 1;
+        double dx = centerX - (bounds.getWidth() / 2 + bounds.getMinX());
+        double dy = centerY - (bounds.getHeight() / 2 + bounds.getMinY());
+
+        setPivot(scale, f * dx, f * dy);
+    }
+
     public void resetZoom() {
         setPivot(1.0, getTranslateX(), getTranslateY());
     }
@@ -83,24 +111,7 @@ public class PanAndZoomPane extends Pane {
     };
 
     private EventHandler<ScrollEvent> onScrollEventHandler = event -> {
-
-        double scale = scaleXProperty().get();
-        double oldScale = scale;
-
-        if (event.getDeltaY() < 0) {
-            scale /= PanAndZoomPane.DEFAULT_DELTA;
-        } else {
-            scale *= PanAndZoomPane.DEFAULT_DELTA;
-        }
-
-        Bounds bounds = getBoundsInParent();
-
-        double f = (scale / oldScale) - 1;
-        double dx = event.getX() - (bounds.getWidth() / 2 + bounds.getMinX());
-        double dy = event.getY() - (bounds.getHeight() / 2 + bounds.getMinY());
-
-        setPivot(scale, f * dx, f * dy);
-
+        zoom(event.getDeltaY() > 0, event.getX(), event.getY());
         event.consume();
     };
 
