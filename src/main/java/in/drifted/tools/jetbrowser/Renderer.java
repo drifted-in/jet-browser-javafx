@@ -18,12 +18,15 @@ package in.drifted.tools.jetbrowser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javafx.event.EventHandler;
@@ -62,7 +65,7 @@ public class Renderer {
         ROOT.setStyle("-fx-background-color: #000000");
         ROOT.addEventFilter(KeyEvent.KEY_PRESSED, onKeyPressedEventHandler);
 
-        try (ZipFile zipFile = new ZipFile(zipFilePath.toFile())) {
+        try (ZipFile zipFile = new ZipFile(zipFilePath.toFile(), StandardCharsets.ISO_8859_1)) {
             zipFile.stream()
                     .filter(entry -> entry.getName().toLowerCase().endsWith(".jpg"))
                     .map(ZipEntry::getName)
@@ -83,8 +86,11 @@ public class Renderer {
     private void updateImage() throws IOException {
 
         String path = PATH_LIST.get(currentImageIndex);
+        Map<String, String> envMap = new HashMap<>();
+        envMap.put("encoding", StandardCharsets.ISO_8859_1.toString());
 
-        try (FileSystem fileSystem = FileSystems.newFileSystem(zipFilePath, ClassLoader.getSystemClassLoader())) {
+        try (FileSystem fileSystem = FileSystems.newFileSystem(zipFilePath, envMap, ClassLoader.getSystemClassLoader())) {
+
             Path imagePath = fileSystem.getPath(path);
             try (InputStream inputStream = Files.newInputStream(imagePath)) {
                 Image image = new Image(inputStream);
