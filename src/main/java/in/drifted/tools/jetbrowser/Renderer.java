@@ -121,7 +121,7 @@ public class Renderer {
                     newImageIndex = PATH_LIST.size() - 1;
 
                 } else {
-                    int delta = event.isControlDown() ? 20 : event.isShiftDown() ? 5 : 1;
+                    int delta = event.isControlDown() ? 20 : event.isShiftDown() ? 10 : 1;
 
                     if (event.getCode() == KeyCode.LEFT) {
                         newImageIndex = Math.max(currentImageIndex - delta, 0);
