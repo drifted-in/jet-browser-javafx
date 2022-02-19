@@ -15,6 +15,7 @@ A desktop app for browsing parish book scans distributed in ZIP files.
 - Use `Ctrl +` / `Ctrl -` to increase / decrease the image size
 - Use `R` key to reset the size to the original image size
 - Use `C` key to copy the current image filename to the clipboard
+- Use `S` key to save the current image to a selected location
 
 ## Building as the Windows app
 This app doesn't require JDK on target machine because custom JDK is already bundled.

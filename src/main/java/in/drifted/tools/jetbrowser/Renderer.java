@@ -16,6 +16,7 @@
 
 package in.drifted.tools.jetbrowser;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -39,6 +40,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Renderer {
@@ -101,6 +103,18 @@ public class Renderer {
                 primaryStage.setTitle(currentImageFileName);
                 IMAGE_VIEW.setImage(image);
             }
+        }
+    }
+
+    private void saveImage(Path destPath) throws IOException {
+
+        String path = PATH_LIST.get(currentImageIndex);
+        Map<String, String> envMap = new HashMap<>();
+        envMap.put("encoding", StandardCharsets.ISO_8859_1.toString());
+
+        try (FileSystem fileSystem = FileSystems.newFileSystem(zipFilePath, envMap, ClassLoader.getSystemClassLoader())) {
+            Path imagePath = fileSystem.getPath(path);
+            Files.copy(imagePath, destPath);
         }
     }
 
@@ -170,6 +184,19 @@ public class Renderer {
                 content.putString(currentImageFileName);
                 Clipboard.getSystemClipboard().setContent(content);
                 break;
+            case S:
+                try {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setInitialFileName(getFileName(PATH_LIST.get(currentImageIndex)));
+                    fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                    File file = fileChooser.showSaveDialog(null);
+                    if (file != null) {
+                        saveImage(file.toPath());
+                    }
+
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
         }
 
         event.consume();
