@@ -30,9 +30,9 @@ For other platforms please check https://docs.gluonhq.com/#_platforms
 
 ### Prerequisites
 1. Install Visual Studio 2019 with [mandatory](https://docs.gluonhq.com/#platforms_windows) components
-2. Download and unpack [the latest](https://github.com/gluonhq/graal/releases/latest) version of the Gluon built 
+2. Download and unpack [the latest](https://github.com/gluonhq/graal/releases/latest) version of the Gluon built
    version of GraalVM 21
-3. Set `GRAALVM_HOME` to GraalVM installation folder, e.g. `C:\graalvm-svm-windows-gluon-21.2.0-dev` 
+3. Set `GRAALVM_HOME` to GraalVM installation folder, e.g. `C:\graalvm-svm-windows-gluon-21.2.0-dev`
 
 ### Building native image
 1. Disable all Java references (by adding a path prefix) from the global `PATH` variable
