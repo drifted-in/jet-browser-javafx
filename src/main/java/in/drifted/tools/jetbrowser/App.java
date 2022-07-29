@@ -13,7 +13,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package in.drifted.tools.jetbrowser;
 
 import java.io.IOException;
@@ -41,7 +40,7 @@ public class App extends Application {
         try {
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
-         
+
             primaryStage.setX(bounds.getMinX());
             primaryStage.setY(bounds.getMinY());
             primaryStage.setWidth(bounds.getWidth());
@@ -53,10 +52,10 @@ public class App extends Application {
             Scene scene = new Scene(renderer.getRoot());
             primaryStage.setScene(scene);
             primaryStage.show();
-           
+
             renderer.fitHeight();
             renderer.getRoot().requestFocus();
-            
+
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
